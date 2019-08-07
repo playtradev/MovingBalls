@@ -11,6 +11,9 @@ public class SphereScript : MonoBehaviour
 	private Rigidbody RB;
 	public float ForceMultiplier = 25;
 
+	public SizeType CurrentSize = SizeType.Small;
+
+
 	private void Awake()
 	{
 		RB = GetComponent<Rigidbody>();
@@ -39,8 +42,14 @@ public class SphereScript : MonoBehaviour
 			SphereScript sphereScript = collision.collider.GetComponent<SphereScript>();
 			if(GameManagerScript.Instance.CurrentSphere == this && sphereScript.ColorType == ColorType)
 			{
+
+				CurrentSize+= (int)collision.gameObject.GetComponent<SphereScript>().CurrentSize;
 				Destroy(collision.gameObject);
-				transform.localScale *= 2;
+
+
+				transform.localScale = Vector3.one;
+
+				transform.localScale *= (int)CurrentSize;
 			}
 		}
 	}
@@ -96,4 +105,13 @@ public enum SphereType
     Yellow,
     Green,
     Blue
+}
+
+
+
+public enum SizeType
+{
+	Small = 1,
+    Med,
+    Large
 }
