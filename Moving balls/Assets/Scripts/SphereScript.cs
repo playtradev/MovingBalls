@@ -46,7 +46,7 @@ public class SphereScript : MonoBehaviour
 				CurrentSize+= (int)collision.gameObject.GetComponent<SphereScript>().CurrentSize;
 				Destroy(collision.gameObject);
 
-
+				GameManagerScript.Instance.UpdateState(ColorType, CurrentSize);
 				transform.localScale = Vector3.one;
 
 				transform.localScale *= (int)CurrentSize;
@@ -89,6 +89,7 @@ public class SphereScript : MonoBehaviour
 				if((x > 0.5f || z > 0.5f))
 				{
 					isTouched = false;
+					GameManagerScript.Instance.CurrentMoves++;
                     RB.AddForce((res[0].point - transform.position).normalized * ForceMultiplier, ForceMode.Impulse);
 				}
             }
