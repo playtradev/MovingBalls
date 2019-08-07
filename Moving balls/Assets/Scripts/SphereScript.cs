@@ -10,6 +10,7 @@ public class SphereScript : MonoBehaviour
 	public SphereType ColorType;
 	private Rigidbody RB;
 	public float ForceMultiplier = 25;
+    public float Threshold = 0.5f;
 
 	public SizeType CurrentSize = SizeType.Small;
 
@@ -89,7 +90,7 @@ public class SphereScript : MonoBehaviour
 
                 Debug.Log(x);
                 Debug.Log(z);
-				if((x > 0.5f || z > 0.5f))
+				if((x > Threshold || z > Threshold))
 				{
 					isTouched = false;
 					GameManagerScript.Instance.CurrentMoves++;
