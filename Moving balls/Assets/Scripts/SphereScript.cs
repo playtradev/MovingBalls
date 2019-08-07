@@ -27,23 +27,7 @@ public class SphereScript : MonoBehaviour
     {
 		if(Input.GetMouseButtonUp(0))
 		{
-			if(isTouched)
-			{
-				Debug.Log("Up");
-				isTouched = false;
-				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                Plane p = new Plane(Vector3.up, Vector3.zero);
-                float dist = 0;
-                p.Raycast(ray, out dist);
-                Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 30);
-				RaycastHit hit;
-				List<RaycastHit> res = Physics.RaycastAll(ray, 100).Where(r => r.collider.tag == "Plane").ToList();
-				if (res.Count > 0)
-				{
-					RB.AddForce((res[0].point- transform.position).normalized * ForceMultiplier, ForceMode.Impulse);
-				}
-
-			}
+			
 		}
 	}
 
@@ -67,6 +51,39 @@ public class SphereScript : MonoBehaviour
 		Debug.Log("Down");
 		isTouched = true;
 		GameManagerScript.Instance.CurrentSphere = this;
+	}
+
+
+	private void OnMouseDrag()
+	{
+		if (isTouched)
+        {
+            Debug.Log("Up");
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Plane p = new Plane(Vector3.up, Vector3.zero);
+            float dist = 0;
+            p.Raycast(ray, out dist);
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 30);
+            RaycastHit hit;
+            List<RaycastHit> res = Physics.RaycastAll(ray, 100).Where(r => r.collider.tag == "Plane").ToList();
+
+
+
+			if (res.Count > 0)
+            {
+
+				float x = Mathf.Abs(transform.position.x - res[0].point.x);
+                float z = Mathf.Abs(transform.position.z - res[0].point.z);
+
+                Debug.Log(x);
+                Debug.Log(z);
+				if((x > 0.5f || z > 0.5f))
+				{
+					isTouched = false;
+                    RB.AddForce((res[0].point - transform.position).normalized * ForceMultiplier, ForceMode.Impulse);
+				}
+            }
+        }
 	}
 
 }
