@@ -58,7 +58,10 @@ public class SphereScript : MonoBehaviour
 	private void OnMouseDown()
 	{
 		Debug.Log("Down");
-		isTouched = true;
+		if(GameManagerScript.Instance.CurrentMoves != GameManagerScript.Instance.maxMoves)
+		{
+			isTouched = true;
+		}
 		GameManagerScript.Instance.CurrentSphere = this;
 	}
 
