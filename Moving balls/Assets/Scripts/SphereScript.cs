@@ -40,7 +40,7 @@ public class SphereScript : MonoBehaviour
 		if(collision.collider.tag == "Sphere")
 		{
 			SphereScript sphereScript = collision.collider.GetComponent<SphereScript>();
-			if(sphereScript.ColorType == ColorType && gameObject.activeInHierarchy)
+			if(sphereScript.ColorType == ColorType && gameObject.activeInHierarchy && sphereScript.CurrentSize == CurrentSize)
 			{
 				CurrentSize+= (int)collision.gameObject.GetComponent<SphereScript>().CurrentSize;
 				collision.gameObject.SetActive(false);
