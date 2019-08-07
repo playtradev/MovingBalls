@@ -40,10 +40,10 @@ public class SphereScript : MonoBehaviour
 		if(collision.collider.tag == "Sphere")
 		{
 			SphereScript sphereScript = collision.collider.GetComponent<SphereScript>();
-			if(GameManagerScript.Instance.CurrentSphere == this && sphereScript.ColorType == ColorType)
+			if(sphereScript.ColorType == ColorType && gameObject.activeInHierarchy)
 			{
-
 				CurrentSize+= (int)collision.gameObject.GetComponent<SphereScript>().CurrentSize;
+				collision.gameObject.SetActive(false);
 				Destroy(collision.gameObject);
 
 				GameManagerScript.Instance.UpdateState(ColorType, CurrentSize);
